@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>What PeeringDB company would you like to query?</h1>
+  {% if error %}
+      <h3>Error Found</h3>
+      {{ error }}
+  {% endif %}
+  <form action="" method="POST">{% csrf_token %}
+  {{ form.as_p }}
+  <p><input type="submit" value="Query Org"></p>
+  </form>
+
+
+    {% if orgs %}
+  <h1>Existing PeeringDB Queries</h1>
+        {% for org in orgs %}
+            <li><a href="/orgs/{{ org.id }}">{{ org }}</a></li>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

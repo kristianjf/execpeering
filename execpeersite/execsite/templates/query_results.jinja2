@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ org_record.name }}: ASN {{ org_record.asn }}</h1>
+    <p>
+    <ul>
+        <b>Unique Organizations</b>: {{ org_record.unique_orgs }}<br>
+        <b>Total Exchanges</b>: {{ org_record.total_exchanges }}<br>
+        <b>Total Peers</b>: {{ org_record.total_peers }}<br>
+        <b>Total Capacity</b>: {{ org_record.total_capacity }}<br>
+    </ul>
+    </p>
+    <table border="1">
+        <th>Organization</th>
+        <th>Exchange Point</th>
+        <th>Peers</th>
+        <th>Peer Capacity</th>
+        {% for peer, connections in conn_table.items %}
+            <tr>
+                <th rowspan="{{ connections|length }}">{{ peer }}</th>
+                {% for connection in connections %}
+                    {% if forloop.first %}
+                        <td>{{ connection.exchange_point }}</td>
+                        <td>{{ connection.connection_count }}</td>
+                        <td>{{ connection.capacity }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ connection.exchange_point }}</td>
+                            <td>{{ connection.connection_count }}</td>
+                            <td>{{ connection.capacity }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
