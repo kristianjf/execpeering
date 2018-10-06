@@ -1,7 +1,11 @@
-# execpeering
+# Peering Analysis
 
- Your CEO would like to see a list of all the public peering's grouped by peering exchange point name. He would also like an executive summary showing total peering's, total unique organization peering's and total aggregate speed.
+Initial Project:
+- Generate a list of all the public peering's grouped by peering exchange point name. 
+- Create an executive summary showing total peering's, total unique organization peering's and total aggregate speed.
 
-The CEO is known for being impressed if any other useful information is also shown in the executive summary.
+Additional Milestones:
+- Create graph that depicts organizations as edges and exchanges as nodes
+- Create page that analyzes two organizations' total capacity and capacity per exchange
 
 Demo: https://whispering-caverns-69609.herokuapp.com/
