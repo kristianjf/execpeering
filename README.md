@@ -10,5 +10,6 @@ Additional Milestones:
 
 Minor Improvements:
 - Add ability to update existing organization
+- Add unit test for django models
 
 Demo: https://whispering-caverns-69609.herokuapp.com/
