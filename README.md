@@ -8,8 +8,4 @@ Additional Milestones:
 - Create graph that depicts organizations as edges and exchanges as nodes
 - Create page that analyzes two organizations' total capacity and capacity per exchange
 
-Minor Improvements:
-- Add ability to update existing organization
-- Add unit test for django models
-
 Demo: https://whispering-caverns-69609.herokuapp.com/
