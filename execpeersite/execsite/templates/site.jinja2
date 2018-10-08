@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>What PeeringDB company would you like to query?</h1>
+  <h3>What PeeringDB company would you like to query?</h3>
   {% if error %}
       <h3>Error Found</h3>
       {{ error }}
@@ -13,7 +13,7 @@
 
 
     {% if orgs %}
-  <h1>Existing PeeringDB Queries</h1>
+  <h3>Existing PeeringDB Queries</h3>
         {% for org in orgs %}
             <li><a href="/orgs/{{ org.id }}">{{ org }}</a></li>
         {% endfor %}
