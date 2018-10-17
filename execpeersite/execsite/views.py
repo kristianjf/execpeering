@@ -83,7 +83,7 @@ def org_data_view(request, **kwargs):
                                                     'conn_table': conn_table})
 
 
-def test_view(request, org_ids):
+def diagram_view(request, org_ids):
     uniq_orgs = set(org_ids.split('/'))
     org_conn_records = []
     for org in uniq_orgs:
@@ -91,4 +91,4 @@ def test_view(request, org_ids):
         connection_record = Connectivity.objects.filter(org_name=org_record)
         org_conn_records.append((org_record, connection_record))
     graph = sankey_diagram(org_conn_records)
-    return render(request, 'test.jinja2', {'graph': graph})
+    return render(request, 'sankey_diagram.jinja2', {'graph': graph})
