@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from execsite.models import OrganizationForm, Organization, PeerOrganization, Connectivity
 from prdb_requests.prdb_req import Organization as prdb_org
+from utilities.execsite_graphs.es_graphs import sankey_diagram
+from django.views.generic.base import TemplateView
+from django.http import HttpResponse
 
 
 def site_view(request):
@@ -78,3 +81,14 @@ def org_data_view(request, **kwargs):
                                                     'peer_records': peer_org_records, \
                                                     'conn_records': connection_records, \
                                                     'conn_table': conn_table})
+
+
+def test_view(request, org_ids):
+    uniq_orgs = set(org_ids.split('/'))
+    org_conn_records = []
+    for org in uniq_orgs:
+        org_record = Organization.objects.get(id=org)
+        connection_record = Connectivity.objects.filter(org_name=org_record)
+        org_conn_records.append((org_record, connection_record))
+    graph = sankey_diagram(org_conn_records)
+    return render(request, 'test.jinja2', {'graph': graph})
