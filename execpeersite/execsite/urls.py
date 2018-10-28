@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.urls import re_path
 from execsite.views import site_view, org_data_view, diagram_view
 
 urlpatterns = [
@@ -9,5 +8,5 @@ urlpatterns = [
     url(r'^orgs/(?P<org_id>\d+)/$',
         org_data_view,
         name="organizations"),
-    url(r'test/(?P<org_ids>[\d+/]+)/$', diagram_view)
+    url(r'compare/(?P<org_ids>[\d+/]+)/$', diagram_view)
 ]

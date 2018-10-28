@@ -39,8 +39,8 @@ class Organization:
         Initialize instance of Organization Class.
         :param org_name: Name to query from peering_db. Must be exact match.
         """
-        self.org_name = org_name
-        self.asn, self.net_id = self.retrieve('/net', json_return=['asn', 'id'], name__in=org_name)
+        # self.org_name = org_name
+        self.org_name, self.asn, self.net_id = self.retrieve('/net', json_return=['name', 'asn', 'id'], name__contains=org_name)
         self.total_peers = int()
         self.total_exchanges = int()
         self.total_capacity = int()

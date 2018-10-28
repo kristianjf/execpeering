@@ -4,7 +4,7 @@ from decouple import config
 from prdb_req import Organization
 '''
 Test functions in the prdb_request module:
-- class: Organizaiton
+- class: Organization
   - Organization.retrieve()
     - method: retrieve(path)
     - method: retrieve(path, **kwargs)

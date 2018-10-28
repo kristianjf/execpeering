@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from execsite.models import OrganizationForm, Organization, PeerOrganization, Connectivity
-from prdb_requests.prdb_req import Organization as prdb_org
+from utilities.prdb_requests.prdb_req import Organization as prdb_org
 from utilities.execsite_graphs.es_graphs import sankey_diagram
-from django.views.generic.base import TemplateView
-from django.http import HttpResponse
 
 
 def site_view(request):

@@ -1,2 +1,9 @@
-{{ graph | safe }}
-{#{{ graph }}#}
+{% extends "base.html" %}
+{% block graphs %}
+    {{ graph | safe }}
+{% endblock %}
+{% block graph-content %}
+    <p>Note: Node Value reflects sum of "outgoing flow" values only.</p>
+    <br>
+    <br>
+{% endblock %}

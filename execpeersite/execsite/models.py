@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django.core.validators import ValidationError
 
 
 class Organization(models.Model):
@@ -42,6 +43,12 @@ class Connectivity(models.Model):
 
 
 class OrganizationForm(ModelForm):
+    def clean_name(self):
+        if [org.name for org in Organization.objects.all() if self.data['name'] in org.name]:
+            raise ValidationError('The name provided has a partial or full match to an existing organization.',
+                                  code='invalid',
+                                  params={'name': self.data['name']}
+                                  )
     class Meta:
         model = Organization
         fields = ['name']

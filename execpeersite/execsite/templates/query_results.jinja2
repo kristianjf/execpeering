@@ -18,21 +18,21 @@
         <tbody>
         {% for peer, connections in conn_table.items %}
             <tr>
-            <th rowspan="{{ connections|length }}">{{ peer }}</th>
-            {% for connection in connections %}
-                {% if forloop.first %}
-                    <td>{{ connection.exchange_point }}</td>
-                    <td>{{ connection.connection_count }}</td>
-                    <td>{{ connection.capacity }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
+                <th rowspan="{{ connections|length }}">{{ peer }}</th>
+                {% for connection in connections %}
+                    {% if forloop.first %}
                         <td>{{ connection.exchange_point }}</td>
                         <td>{{ connection.connection_count }}</td>
                         <td>{{ connection.capacity }}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ connection.exchange_point }}</td>
+                            <td>{{ connection.connection_count }}</td>
+                            <td>{{ connection.capacity }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             </tr>
             </tbody>
         {% endfor %}

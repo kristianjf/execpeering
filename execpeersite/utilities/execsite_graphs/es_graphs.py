@@ -5,7 +5,8 @@ from plotly import graph_objs as go
 def sankey_diagram(org_conn_records):
     def process_conn_set(exchange_name, exchange_index, conn_set, src=None):
         org_index = conn_set[0]
-        capacity = conn_set[2]
+        # Convert capacity from Mbps to Gbps
+        capacity = conn_set[2] / 1000
         if src == 'Organization':
             if exchange_name in data['node']['label']:
                 data['link']['source'].append(org_index)
@@ -63,7 +64,6 @@ def sankey_diagram(org_conn_records):
                     else:
                         process_conn_set(exchange_name, exchange_index, conn_set, src='Organization')
 
-
     data_input = {}
     # Use dict to get a unique set of keys (exchanges) for all organizations
     for i, org_conn_record in enumerate(org_conn_records):
@@ -79,6 +79,9 @@ def sankey_diagram(org_conn_records):
     data = dict(
         type='sankey',
         orientation="h",
+        valueformat=',3r',
+        valuesuffix=' Gbps',
+        hoverinfo='text',
         node=dict(
             pad=6,
             thickness=10,
@@ -127,11 +130,13 @@ def sankey_diagram(org_conn_records):
 
         process_exchange_records(exchange)
 
-    layout =  dict(
-        title = "Public Exchange Comparison",
-        font = dict(
-          size = 10
-        )
+    layout = dict(
+        font=dict(
+          size=10
+
+        ),
+        height=960,
+        autosize=True
     )
 
     fig = go.Figure(data=[data], layout=layout)

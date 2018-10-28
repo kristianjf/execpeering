@@ -1,17 +1,52 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    {% block head-css %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <title>Executive Peering Information</title>
-  </head>
-  <body>
-      <div class="container">
-      <div class="content">
-      {% block content %}
-       [content will go here]
-      {% endblock %}
-      </div>
+    {% endblock %}
+</head>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Peering Analysis</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Query</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/compare">Compare</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
-  </body>
+    <br>
+</header>
+
+<body>
+<div class="container">
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+{% block graphs %}
+{% endblock %}
+<div class="container">
+    <div class="content">
+        {% block graph-content %}
+        {% endblock %}
+    </div>
+</div>
+</body>
 </html>
