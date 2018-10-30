@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if error %}
+        <h3>Error Found</h3>
+        {{ error }}
+    {% endif %}
+    <h1 class="display-4">Query Organizations</h1>
+    <small class="text-muted">External Query: <a href="https://peeringdb.com/apidocs/">PeeringDB API</a></small>
+    <br>
+    <br>
+    <form action="" method="POST">{% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+{% endblock %}

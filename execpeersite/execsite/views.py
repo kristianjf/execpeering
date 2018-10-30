@@ -11,6 +11,44 @@ def site_view(request):
     :return: GET: site.jinja2 template
              POST: query_results.jinja2 template
     """
+    orgs = Organization.objects.all()
+    return render(request, 'site.jinja2', {'orgs': orgs})
+
+
+def org_data_view(request, **kwargs):
+    """
+    Detailed view for organizations.
+    :param request: object passed from urls
+    :param kwargs: named regex groups from urls
+    :return: render query_results.jinja2 template
+    """
+    org_record = Organization.objects.get(id=kwargs['org_id'])
+    peer_org_records = PeerOrganization.objects.filter(org=org_record)
+    connection_records = Connectivity.objects.filter(org_name=org_record)
+    conn_table = {peer_org:[conn_record for conn_record in connection_records if conn_record.peer_name == peer_org] for peer_org in peer_org_records}
+    return render(request, 'query_results.jinja2', {'org_record': org_record, \
+                                                    'peer_records': peer_org_records, \
+                                                    'conn_records': connection_records, \
+                                                    'conn_table': conn_table})
+
+
+def diagram_view(request, org_ids):
+    uniq_orgs = set(org_ids.split('/'))
+    org_conn_records = []
+    for org in uniq_orgs:
+        org_record = Organization.objects.get(id=org)
+        connection_record = Connectivity.objects.filter(org_name=org_record)
+        org_conn_records.append((org_record, connection_record))
+    graph = sankey_diagram(org_conn_records)
+    return render(request, 'sankey_diagram.jinja2', {'graph': graph})
+
+def query_view(request):
+    """
+    Summary view displaying form for query and list of queried sites.
+    :param request: object passed from urls
+    :return: GET: site.jinja2 template
+             POST: query_results.jinja2 template
+    """
     if request.method == 'POST':
         form = OrganizationForm(request.POST)
         if form.is_valid():
@@ -58,35 +96,15 @@ def site_view(request):
             error = form.errors
             form = OrganizationForm()
             orgs = Organization.objects.all()
-            return render(request, 'site.jinja2', {'form': form, 'orgs': orgs, 'error': error})
+            return render(request, 'query.jinja2', {'form': form, 'orgs': orgs, 'error': error})
     form = OrganizationForm()
     orgs = Organization.objects.all()
-    return render(request, 'site.jinja2', {'form': form, 'orgs': orgs})
+    return render(request, 'query.jinja2', {'form': form, 'orgs': orgs})
 
-
-def org_data_view(request, **kwargs):
-    """
-    Detailed view for organizations.
-    :param request: object passed from urls
-    :param kwargs: named regex groups from urls
-    :return: render query_results.jinja2 template
-    """
-    org_record = Organization.objects.get(id=kwargs['org_id'])
-    peer_org_records = PeerOrganization.objects.filter(org=org_record)
-    connection_records = Connectivity.objects.filter(org_name=org_record)
-    conn_table = {peer_org:[conn_record for conn_record in connection_records if conn_record.peer_name == peer_org] for peer_org in peer_org_records}
-    return render(request, 'query_results.jinja2', {'org_record': org_record, \
-                                                    'peer_records': peer_org_records, \
-                                                    'conn_records': connection_records, \
-                                                    'conn_table': conn_table})
-
-
-def diagram_view(request, org_ids):
-    uniq_orgs = set(org_ids.split('/'))
-    org_conn_records = []
-    for org in uniq_orgs:
-        org_record = Organization.objects.get(id=org)
-        connection_record = Connectivity.objects.filter(org_name=org_record)
-        org_conn_records.append((org_record, connection_record))
-    graph = sankey_diagram(org_conn_records)
-    return render(request, 'sankey_diagram.jinja2', {'graph': graph})
+def compare_view(request):
+    orgs = Organization.objects.all()
+    if request.method == 'POST':
+        org_list = request.POST.getlist('orgs')
+        org_list = '/'.join(org_list)
+        return redirect(f'/compare/{org_list}')
+    return render(request, 'compare.jinja2', {'orgs': orgs})

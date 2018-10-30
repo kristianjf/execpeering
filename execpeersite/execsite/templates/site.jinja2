@@ -1,22 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p class="lead">This page provides data and visuals to compare content and service provider data hosted on <a href="https://www.peeringdb.com/">PeeringDB</a>.</p>
-  {% if error %}
-      <h3>Error Found</h3>
-      {{ error }}
-  {% endif %}
-  <form action="" method="POST">{% csrf_token %}
-  {{ form.as_p }}
-  <p><input type="submit" value="Query Org"></p>
-  </form>
-
+    {% load humanize %}
+    {% load mathfilters %}
+    <p class="lead">This site provides summary data and visualizations to assess content and service provider data
+        hosted on <a href="https://www.peeringdb.com/">PeeringDB</a>.</p>
 
     {% if orgs %}
-  <h3>Existing PeeringDB Queries</h3>
-        {% for org in orgs %}
-            <li><a href="/orgs/{{ org.id }}">{{ org }}</a></li>
-        {% endfor %}
+        <br>
+        <h1 class="display-4">Peer Organizations</h1>
+        <br>
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="text-center">ASN</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Unique Exchange Providers</th>
+                <th scope="col" class="text-center">Total Exchange Points</th>
+                <th scope="col" class="text-center">Total Peers</th>
+                <th scope="col" class="text-center">Total Capacity</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for org in orgs %}
+                <tr>
+                    <th scope="row" class="text-center">{{ org.asn }}</th>
+                    <td class="text-center"><a href="/orgs/{{ org.id }}">{{ org }}</a></td>
+                    <td class="text-center">{{ org.unique_orgs }}</td>
+                    <td class="text-center">{{ org.total_exchanges }}</td>
+                    <td class="text-center">{{ org.total_peers }}</td>
+                    <td class="text-center">{{ org.total_capacity|div:1000|floatformat:"0"|intcomma }} Gbps</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
     {% endif %}
 
 {% endblock %}

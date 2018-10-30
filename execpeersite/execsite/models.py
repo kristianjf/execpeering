@@ -49,6 +49,8 @@ class OrganizationForm(ModelForm):
                                   code='invalid',
                                   params={'name': self.data['name']}
                                   )
+        else:
+            return self.data['name']
     class Meta:
         model = Organization
         fields = ['name']

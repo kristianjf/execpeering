@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block graphs %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     {{ graph | safe }}
 {% endblock %}
 {% block graph-content %}
-    <p>Note: Node Value reflects sum of "outgoing flow" values only.</p>
-    <br>
+    <p class="text-center">Note: Node (Organization) value reflects sum of <i>outgoing flow</i> values only.</p>
     <br>
 {% endblock %}

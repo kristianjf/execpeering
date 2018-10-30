@@ -135,10 +135,9 @@ def sankey_diagram(org_conn_records):
           size=10
 
         ),
-        height=960,
         autosize=True
     )
 
     fig = go.Figure(data=[data], layout=layout)
-    div = plot(fig, auto_open=False, output_type='div')
+    div = plot(fig, auto_open=False, output_type='div', include_plotlyjs=False)
     return div

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load humanize %}
+    {% load mathfilters %}
+
+    {% if error %}
+        <h3>Error Found</h3>
+        {{ error }}
+    {% endif %}
+    <h1 class="display-4">Compare Organizations</h1>
+    <small class="text-muted">External Query: <a href="https://plot.ly/api/">Plot.ly Diagram</a></small>
+    <br>
+    <br>
+    <form action="" method="POST">{% csrf_token %}
+        {#            {{ form.as_p }}#}
+        {#            <button type="submit" class="btn btn-primary">Submit</button>#}
+
+
+        {% if orgs %}
+            <table class="table table-hover table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">ASN</th>
+                    <th scope="col" class="text-center">Name</th>
+                    <th scope="col" class="text-center">Total Peers</th>
+                    <th scope="col" class="text-center">Total Capacity</th>
+                    <th scope="col" class="text-center">Compare</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for org in orgs %}
+                    <tr>
+                        <th scope="row" class="text-center">{{ org.asn }}</th>
+                        <td class="text-center"><a href="/orgs/{{ org.id }}">{{ org }}</a></td>
+                        <td class="text-center">{{ org.total_peers }}</td>
+                        <td class="text-center">{{ org.total_capacity|div:1000|floatformat:"0"|intcomma }} Gbps</td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" name='orgs'
+                                                       id={{ org.id }} value={{ org.id }}></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-dark float-right">Submit</button>
+            </form>
+        {% endif %}
+{% endblock %}
