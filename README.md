@@ -8,4 +8,4 @@ Additional Milestones:
 - Create graph that depicts organizations as edges and exchanges as nodes
 - Create page that analyzes two organizations' total capacity and capacity per exchange
 
-Demo: https://whispering-caverns-69609.herokuapp.com/
+Demo: https://peer-analysis.herokuapp.com/
