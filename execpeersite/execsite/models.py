@@ -44,7 +44,7 @@ class Connectivity(models.Model):
 
 class OrganizationForm(ModelForm):
     def clean_name(self):
-        if [org.name for org in Organization.objects.all() if self.data['name'] in org.name]:
+        if [org.name for org in Organization.objects.all() if self.data['name'].lower() in org.name.lower()]:
             raise ValidationError('The name provided has a partial or full match to an existing organization.',
                                   code='invalid',
                                   params={'name': self.data['name']}
